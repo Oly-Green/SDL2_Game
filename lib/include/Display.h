@@ -19,7 +19,7 @@ public:
     bool init();
 
 //Loads media
-    bool loadMedia();
+    bool loadMedia(const char* imgFP);
 
 //Shows media on screen
     void showMedia();

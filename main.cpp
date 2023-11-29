@@ -8,6 +8,7 @@ and may not be redistributed without written permission.*/
 
 
 int main( int argc, char* args[] ){
+
     Display display;
     if( !display.init() )
     {
@@ -15,13 +16,22 @@ int main( int argc, char* args[] ){
     }
     else {
         //Load media
-        if (!display.loadMedia()) {
+        if (!display.loadMedia("assets/playerCharacter/lilguy.bmp")) {
             printf("Failed to load media!\n");
         } else {
-            //Apply the image
-            display.showMedia();
-            SDL_Event e; bool quit = false; while( quit == false ){ while( SDL_PollEvent( &e ) ){ if( e.type == SDL_QUIT ) quit = true; } }
 
+            //Game Loop
+            bool quit = false;
+            SDL_Event event;
+            while(!quit){
+                while(SDL_PollEvent(&event) != 0){
+                    if (event.type == SDL_QUIT){
+                        quit = true;
+                    }
+                }
+                //Apply the image
+                display.showMedia();
+            }
         }
     }
     display.closeDisplay();

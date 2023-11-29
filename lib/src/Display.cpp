@@ -25,10 +25,10 @@ bool Display::init() {
     return success;
 }
 
-bool Display::loadMedia() {
+bool Display::loadMedia(const char* imgFP) {
     bool success = true;
 
-    gameImage = SDL_LoadBMP("assets/playerCharacter/sprites.bmp");
+    gameImage = SDL_LoadBMP(imgFP);
     if (gameImage == nullptr){
         printf( "Unable to load image %s! SDL Error: %s\n", "02_getting_an_image_on_the_screen/hello_world.bmp", SDL_GetError() );
         success = false;
