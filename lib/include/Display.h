@@ -6,15 +6,32 @@
 #define SDL_PROJECT_DISPLAY_H
 #include <SDL.h>
 #include <stdio.h>
+#include <string>
 
 class Display {
 private:
-    const int SCREEN_WIDTH = 640;
-    const int SCREEN_HEIGHT = 480;
+    const int SCREEN_WIDTH;
+    const int SCREEN_HEIGHT;
+
+    //Key press surfaces constants
+    enum KeyPressSurfaces
+    {
+        KEY_PRESS_SURFACE_DEFAULT,
+        KEY_PRESS_SURFACE_UP,
+        KEY_PRESS_SURFACE_DOWN,
+        KEY_PRESS_SURFACE_LEFT,
+        KEY_PRESS_SURFACE_RIGHT,
+        KEY_PRESS_SURFACE_TOTAL
+    };
+
     SDL_Window* gameWindow = nullptr;
     SDL_Surface* gameScreenSurface = nullptr;
-    SDL_Surface* gameImage = nullptr;
+    SDL_Surface* gameKeyPressSurface[KEY_PRESS_SURFACE_TOTAL];
+    SDL_Surface * gameCurrentSurface = nullptr;
+
 public:
+    Display(int width, int height);
+
 //Starts up SDL and creates window
     bool init();
 
@@ -26,7 +43,15 @@ public:
 
 //Frees media and shuts down SDL
     void closeDisplay();
+
+//Loads individual image
+    SDL_Surface* loadSurface(std::string path);
+
+//Update current surface based on keypress event
+    void updateSurface(SDL_Event e);
 };
+
+
 
 
 #endif //SDL_PROJECT_DISPLAY_H

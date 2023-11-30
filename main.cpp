@@ -5,35 +5,12 @@ and may not be redistributed without written permission.*/
 #include <SDL.h>
 #include <stdio.h>
 #include "Display.h"
+#include "Game.h"
 
 
 int main( int argc, char* args[] ){
-
-    Display display;
-    if( !display.init() )
-    {
-        printf( "Failed to initialize!\n" );
-    }
-    else {
-        //Load media
-        if (!display.loadMedia("assets/playerCharacter/lilguy.bmp")) {
-            printf("Failed to load media!\n");
-        } else {
-
-            //Game Loop
-            bool quit = false;
-            SDL_Event event;
-            while(!quit){
-                while(SDL_PollEvent(&event) != 0){
-                    if (event.type == SDL_QUIT){
-                        quit = true;
-                    }
-                }
-                //Apply the image
-                display.showMedia();
-            }
-        }
-    }
-    display.closeDisplay();
+    Display display(640, 480);
+    Game game;
+    game.start(display);
     return 0;
 }

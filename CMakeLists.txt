@@ -8,9 +8,13 @@ include_directories(SDL_Project ${SDL2_INCLUDE_DIRS})
 
 add_library(libSDL
         lib/src/Display.cpp
-        lib/include/Display.h)
+        lib/include/Display.h
+        lib/src/Game.cpp
+        lib/include/Game.h
+        lib/src/Player.cpp
+        lib/include/Player.h)
 target_include_directories(libSDL PRIVATE lib/include)
 
 add_executable(SDL_Project main.cpp)
 target_include_directories(SDL_Project PRIVATE lib/include)
-target_link_libraries(SDL_Project ${SDL2_LIBRARIES} libSDL)
+target_link_libraries(SDL_Project libSDL ${SDL2_LIBRARIES} )
