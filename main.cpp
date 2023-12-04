@@ -6,6 +6,7 @@ and may not be redistributed without written permission.*/
 #include <stdio.h>
 #include "Display.h"
 #include "Game.h"
+#include "matplot/matplot.h"
 
 
 int main( int argc, char* args[] ){
