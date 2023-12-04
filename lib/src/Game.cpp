@@ -21,12 +21,21 @@ void Game::start(Display display) {
                     if (event.type == SDL_QUIT){
                         quit = true;
                     }
-                    else if (event.type == SDL_KEYDOWN){
-                        display.updateSurface(event);
-                    }
+//                    else if (event.type == SDL_KEYDOWN){
+//                        display.updateSurface(event);
+//                    }
                 }
-                //Apply the image
-                display.showMedia();
+                SDL_SetRenderDrawColor( display.getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF );
+                SDL_RenderClear(display.getRenderer());
+                //SDL_RenderCopy(display.getRenderer(), display.getPlayerTexture(), nullptr, nullptr);
+
+                display.renderBackground();
+                display.renderPlayer();
+
+
+                SDL_RenderPresent(display.getRenderer());
+//                //Apply the image
+//                display.showMedia();
             }
         }
     }

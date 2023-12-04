@@ -12,7 +12,9 @@ add_library(libSDL
         lib/src/Game.cpp
         lib/include/Game.h
         lib/src/Player.cpp
-        lib/include/Player.h)
+        lib/include/Player.h
+        lib/src/Texture.cpp
+        lib/include/Texture.h)
 target_include_directories(libSDL PRIVATE lib/include)
 
 add_executable(SDL_Project main.cpp)

@@ -28,6 +28,10 @@ private:
     SDL_Surface* gameScreenSurface = nullptr;
     SDL_Surface* gameKeyPressSurface[KEY_PRESS_SURFACE_TOTAL];
     SDL_Surface * gameCurrentSurface = nullptr;
+    SDL_Renderer* gameRenderer = nullptr;
+    SDL_Texture* playerTexture = nullptr;
+    SDL_Texture* backgroundTexture = nullptr;
+
 
 public:
     Display(int width, int height);
@@ -49,7 +53,18 @@ public:
 
 //Update current surface based on keypress event
     void updateSurface(SDL_Event e);
+
+    SDL_Texture* loadTexture(std::string path);
+    void renderTexture(int x, int y, SDL_Texture* texture);
+    void renderBackground();
+    void renderPlayer();
+    void freeTexture(SDL_Texture* texture);
+
+    SDL_Renderer* getRenderer();
+
+
 };
+
 
 
 

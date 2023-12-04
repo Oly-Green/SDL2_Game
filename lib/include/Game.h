@@ -8,6 +8,7 @@
 #include <SDL.h>
 #include <stdio.h>
 #include "Display.h"
+#include "Texture.h"
 
 
 class Game {
@@ -21,6 +22,7 @@ private:
 
 public:
     void start(Display display);
+
 };
 
 
