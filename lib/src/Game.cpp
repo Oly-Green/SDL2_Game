@@ -30,7 +30,7 @@ void Game::start(Display display) {
                 //SDL_RenderCopy(display.getRenderer(), display.getPlayerTexture(), nullptr, nullptr);
 
                 display.renderBackground();
-                display.renderPlayer();
+                display.renderPlayer(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 3);
 
 
                 SDL_RenderPresent(display.getRenderer());

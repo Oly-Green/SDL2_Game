@@ -57,7 +57,7 @@ public:
     SDL_Texture* loadTexture(std::string path);
     void renderTexture(int x, int y, SDL_Texture* texture);
     void renderBackground();
-    void renderPlayer();
+    void renderPlayer(int x, int y, int rescaleFactor);
     void freeTexture(SDL_Texture* texture);
 
     SDL_Renderer* getRenderer();

@@ -41,8 +41,8 @@ bool Display::init() {
 bool Display::loadMedia(const char* imgFP) {
     bool success = true;
 
-    playerTexture = loadTexture("assets/background/Grass_Sample.bmp");
-    backgroundTexture = loadTexture("assets/playerCharacter/lilguy.bmp");
+    playerTexture = loadTexture("assets/playerCharacter/lilguy.bmp");
+    backgroundTexture = loadTexture("assets/background/Grass_Sample.bmp");
 //    playerTexture = loadTexture(imgFP);
 //    if (playerTexture == nullptr){
 //        printf( "Failed to load texture image!\n" );
@@ -152,7 +152,7 @@ SDL_Texture *Display::loadTexture(std::string path) {
         printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), SDL_GetError() );
     }
     else{
-        SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0x65, 0xFF, 0));
+//        SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0x65, 0xFF, 0));
         newTexture = SDL_CreateTextureFromSurface(gameRenderer, loadedSurface);
         if (newTexture == nullptr){
             printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
@@ -175,12 +175,17 @@ void Display::renderTexture(int x, int y, SDL_Texture* texture) {
 }
 
 void Display::renderBackground() {
-    renderTexture(0, 0, backgroundTexture);
-}
+    SDL_Point size;
+    SDL_QueryTexture(backgroundTexture, NULL, NULL, &size.x, &size.y);
+    SDL_Rect renderQuad = {0, 0, size.x, size.y};
+    SDL_RenderCopy(gameRenderer, backgroundTexture, nullptr, &renderQuad);}
 
-void Display::renderPlayer() {
-    renderTexture(0, 0, playerTexture);
-
+void Display::renderPlayer(int x, int y, int rescaleFactor) {
+    SDL_SetHint (SDL_HINT_RENDER_SCALE_QUALITY, 0);
+    SDL_Point size;
+    SDL_QueryTexture(playerTexture, NULL, NULL, &size.x, &size.y);
+    SDL_Rect renderQuad = {x, y, size.x*rescaleFactor, size.y*rescaleFactor};
+    SDL_RenderCopy(gameRenderer, playerTexture, nullptr, &renderQuad);
 }
 
 void Display::freeTexture(SDL_Texture* texture) {
