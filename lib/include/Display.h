@@ -32,6 +32,10 @@ private:
     SDL_Texture* playerTexture = nullptr;
     SDL_Texture* backgroundTexture = nullptr;
 
+    static const int WALKING_ANIMATION_SPEED = 4;
+    SDL_Rect gameSpriteClips [WALKING_ANIMATION_SPEED];
+    SDL_Texture* playerSpriteSheet;
+
 
 public:
     Display(int width, int height);
@@ -61,6 +65,8 @@ public:
     void freeTexture(SDL_Texture* texture);
 
     SDL_Renderer* getRenderer();
+
+    void playWalkAnimation(int frame);
 
 
 };

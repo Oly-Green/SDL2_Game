@@ -24,7 +24,7 @@ bool Display::init() {
         }
         else{
             gameScreenSurface = SDL_GetWindowSurface(gameWindow);
-            gameRenderer = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED);
+            gameRenderer = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
             if (gameRenderer == nullptr){
                 printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
                 success = false;
@@ -43,6 +43,31 @@ bool Display::loadMedia(const char* imgFP) {
 
     playerTexture = loadTexture("assets/playerCharacter/lilguy.bmp");
     backgroundTexture = loadTexture("assets/background/Grass_Sample.bmp");
+    playerSpriteSheet = loadTexture("assets/playerCharacter/sprites.bmp");
+
+
+    int playerSpriteWidth = 16;
+    int playerSpriteHeight = 16;
+    //Set sprite clips
+    gameSpriteClips[ 0 ].x = 0;
+    gameSpriteClips[ 0 ].y = 0;
+    gameSpriteClips[ 0 ].w = playerSpriteWidth;
+    gameSpriteClips[ 0 ].h = playerSpriteHeight;
+
+    gameSpriteClips[ 1 ].x = playerSpriteWidth;
+    gameSpriteClips[ 1 ].y = 0;
+    gameSpriteClips[ 1 ].w = playerSpriteWidth;
+    gameSpriteClips[ 1 ].h = playerSpriteHeight;
+
+    gameSpriteClips[ 2 ].x = playerSpriteWidth*2;
+    gameSpriteClips[ 2 ].y = 0;
+    gameSpriteClips[ 2 ].w = playerSpriteWidth;
+    gameSpriteClips[ 2 ].h = playerSpriteHeight;
+
+    gameSpriteClips[ 3 ].x = playerSpriteWidth*3;
+    gameSpriteClips[ 3 ].y = 0;
+    gameSpriteClips[ 3 ].w = playerSpriteWidth;
+    gameSpriteClips[ 3 ].h = playerSpriteHeight;
 //    playerTexture = loadTexture(imgFP);
 //    if (playerTexture == nullptr){
 //        printf( "Failed to load texture image!\n" );
@@ -178,7 +203,8 @@ void Display::renderBackground() {
     SDL_Point size;
     SDL_QueryTexture(backgroundTexture, NULL, NULL, &size.x, &size.y);
     SDL_Rect renderQuad = {0, 0, size.x, size.y};
-    SDL_RenderCopy(gameRenderer, backgroundTexture, nullptr, &renderQuad);}
+    SDL_RenderCopy(gameRenderer, backgroundTexture, nullptr, &renderQuad);
+}
 
 void Display::renderPlayer(int x, int y, int rescaleFactor) {
     SDL_SetHint (SDL_HINT_RENDER_SCALE_QUALITY, 0);
@@ -192,5 +218,16 @@ void Display::freeTexture(SDL_Texture* texture) {
     if (texture != nullptr){
         SDL_DestroyTexture(texture);
     }
+}
+
+void Display::playWalkAnimation(int frame) {
+    SDL_Rect* currentClip = &gameSpriteClips[frame];
+    int x = ( SCREEN_WIDTH - currentClip->w ) / 2;
+    int y = ( SCREEN_HEIGHT - currentClip->h ) / 2;
+
+//    SDL_Point size;
+//    SDL_QueryTexture(playerSpriteSheet, NULL, NULL, &size.x, &size.y);
+    SDL_Rect renderQuad = {x, y, 48, 48};
+    SDL_RenderCopy(gameRenderer, playerSpriteSheet, currentClip, &renderQuad);
 }
 
