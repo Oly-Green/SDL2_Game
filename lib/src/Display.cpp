@@ -31,6 +31,14 @@ bool Display::init() {
             }
             else{
                 SDL_SetRenderDrawColor(gameRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+//                //Initialize PNG loading
+//                int imgFlags = IMG_INIT_PNG;
+//                if( !( IMG_Init( imgFlags ) & imgFlags ) )
+//                {
+//                    printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+//                    success = false;
+//                }
             }
         }
     }
@@ -229,5 +237,17 @@ void Display::playWalkAnimation(int frame) {
 //    SDL_QueryTexture(playerSpriteSheet, NULL, NULL, &size.x, &size.y);
     SDL_Rect renderQuad = {x, y, 48, 48};
     SDL_RenderCopy(gameRenderer, playerSpriteSheet, currentClip, &renderQuad);
+}
+
+void Display::renderGraphs(int frame) {
+    std::string fileName = "graphFrames/frame";
+    fileName+=std::to_string(frame);
+    fileName+=".bmp";
+    SDL_Texture* graphTex = loadTexture(fileName);
+
+    SDL_Point size;
+    SDL_QueryTexture(graphTex, NULL, NULL, &size.x, &size.y);
+    SDL_Rect renderQuad = {0, 0, size.x, size.y};
+    SDL_RenderCopy(gameRenderer, graphTex, nullptr, &renderQuad);
 }
 

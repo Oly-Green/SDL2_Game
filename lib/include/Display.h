@@ -5,6 +5,7 @@
 #ifndef SDL_PROJECT_DISPLAY_H
 #define SDL_PROJECT_DISPLAY_H
 #include <SDL.h>
+
 #include <stdio.h>
 #include <string>
 
@@ -67,6 +68,8 @@ public:
     SDL_Renderer* getRenderer();
 
     void playWalkAnimation(int frame);
+
+    void renderGraphs(int frame);
 
 
 };

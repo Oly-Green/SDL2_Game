@@ -7,20 +7,15 @@ and may not be redistributed without written permission.*/
 #include <stdio.h>
 #include "Display.h"
 #include "Game.h"
+#include "Graph.h"
 #include <vector>
 
 
 int main( int argc, char* args[] ){
-    using namespace matplot;
-
-    std::vector<double> y = {75,  91,  105, 123.5, 131,  150,
-                             179, 203, 226, 249,   281.5};
-    bar(y);
-
-    show();
-
-//    Display display(640, 480);
-//    Game game;
-//    game.start(display);
+    Graph graph({100, 200, 300});
+    graph.generateFrames(3);
+    Display display(640, 480);
+    Game game;
+    game.start(display);
     return 0;
 }
