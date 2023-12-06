@@ -3,6 +3,8 @@
 //
 
 #include "Game.h"
+#include "Graph.h"
+#include <vector>
 
 void Game::start(Display display) {
     if( !display.init() )
@@ -11,6 +13,8 @@ void Game::start(Display display) {
     }
     else {
         //Load media
+
+
         if (!display.loadMedia("assets/playerCharacter/lilguy.bmp")) {
             printf("Failed to load media!\n");
         } else {
