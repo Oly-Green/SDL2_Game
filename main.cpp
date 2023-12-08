@@ -4,7 +4,10 @@ and may not be redistributed without written permission.*/
 //Using SDL and standard IO
 #include <SDL.h>
 #include <matplot/matplot.h>
+
+#include <FreeImage.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "Display.h"
 #include "Game.h"
 #include "Graph.h"
@@ -12,10 +15,14 @@ and may not be redistributed without written permission.*/
 
 
 int main( int argc, char* args[] ){
+    int frames = 20;
     Graph graph({100, 200, 300});
-    graph.generateFrames(3);
+    graph.generateFrames(frames);
     Display display(640, 480);
+    std::cout << "Sleeping to allow time for frames to convert." << std::endl;
+    sleep(3);
+    display.convertFrames(frames);
     Game game;
-    game.start(display);
+    game.start(display, frames, 7);
     return 0;
 }

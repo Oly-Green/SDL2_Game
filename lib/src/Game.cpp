@@ -6,20 +6,16 @@
 #include "Graph.h"
 #include <vector>
 
-void Game::start(Display display) {
+void Game::start(Display display, int animationLength, int animationRate) {
     if( !display.init() )
     {
         printf( "Failed to initialize!\n" );
     }
     else {
         //Load media
-
-
         if (!display.loadMedia("assets/playerCharacter/lilguy.bmp")) {
             printf("Failed to load media!\n");
         } else {
-            int animationRate = 3;
-            int animationLength = 3;
             int startTime = SDL_GetTicks();
             int frame = 0;
             //Game Loop

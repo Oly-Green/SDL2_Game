@@ -21,7 +21,7 @@ private:
 
 
 public:
-    void start(Display display);
+    void start(Display display, int animationLength, int animationRate);
 
 };
 

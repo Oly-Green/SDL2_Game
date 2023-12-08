@@ -2,11 +2,12 @@
 // Created by olive on 11/28/2023.
 //
 
+#include <iostream>
 #include "Display.h"
 
 Display::Display(int width, int height)
         : SCREEN_WIDTH(width), SCREEN_HEIGHT(height) {
-
+    FreeImage_Initialise();
 }
 
 bool Display::init() {
@@ -31,7 +32,6 @@ bool Display::init() {
             }
             else{
                 SDL_SetRenderDrawColor(gameRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
 //                //Initialize PNG loading
 //                int imgFlags = IMG_INIT_PNG;
 //                if( !( IMG_Init( imgFlags ) & imgFlags ) )
@@ -140,6 +140,7 @@ void Display::closeDisplay() {
     SDL_DestroyWindow(gameWindow);
     gameWindow = nullptr;
     SDL_Quit();
+    FreeImage_DeInitialise();
 }
 
 SDL_Surface *Display::loadSurface(std::string path) {
@@ -240,7 +241,7 @@ void Display::playWalkAnimation(int frame) {
 }
 
 void Display::renderGraphs(int frame) {
-    std::string fileName = "graphFrames/frame";
+    std::string fileName = "graphFrames/bmpFrames/frame";
     fileName+=std::to_string(frame);
     fileName+=".bmp";
     SDL_Texture* graphTex = loadTexture(fileName);
@@ -250,4 +251,31 @@ void Display::renderGraphs(int frame) {
     SDL_Rect renderQuad = {0, 0, size.x, size.y};
     SDL_RenderCopy(gameRenderer, graphTex, nullptr, &renderQuad);
 }
+
+void Display::PngToBmp(std::string pngFile, std::string bmpFile) {
+    FIBITMAP* bmp = FreeImage_Load(FIF_PNG, pngFile.c_str());
+    if (bmp == nullptr){
+        std::cout << "Error loading PNG image: " << pngFile << std::endl;
+        return;
+    }
+    FIBITMAP* convertedBMP = FreeImage_ConvertTo24Bits(bmp);
+    FreeImage_Unload(bmp);
+
+    FreeImage_Save(FIF_BMP, convertedBMP, bmpFile.c_str(), BMP_DEFAULT);
+}
+
+void Display::convertFrames(int frames) {
+    for (int i = 0; i < frames; ++i) {
+        std::string PNGfileName = "graphFrames/pngFrames/frame";
+        PNGfileName+=std::to_string(i);
+        PNGfileName+=".png";
+
+        std::string BMPfileName = "graphFrames/bmpFrames/frame";
+        BMPfileName+=std::to_string(i);
+        BMPfileName+=".bmp";
+
+        PngToBmp(PNGfileName, BMPfileName);
+    }
+}
+
 

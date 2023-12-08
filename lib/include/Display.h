@@ -6,6 +6,7 @@
 #define SDL_PROJECT_DISPLAY_H
 #include <SDL.h>
 
+#include <FreeImage.h>
 #include <stdio.h>
 #include <string>
 
@@ -36,6 +37,8 @@ private:
     static const int WALKING_ANIMATION_SPEED = 4;
     SDL_Rect gameSpriteClips [WALKING_ANIMATION_SPEED];
     SDL_Texture* playerSpriteSheet;
+
+
 
 
 public:
@@ -71,6 +74,8 @@ public:
 
     void renderGraphs(int frame);
 
+    void PngToBmp(std::string pngFile, std::string bmpFile);
+    void convertFrames(int frames);
 
 };
 
