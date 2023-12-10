@@ -15,31 +15,8 @@ private:
     const int SCREEN_WIDTH;
     const int SCREEN_HEIGHT;
 
-    //Key press surfaces constants
-    enum KeyPressSurfaces
-    {
-        KEY_PRESS_SURFACE_DEFAULT,
-        KEY_PRESS_SURFACE_UP,
-        KEY_PRESS_SURFACE_DOWN,
-        KEY_PRESS_SURFACE_LEFT,
-        KEY_PRESS_SURFACE_RIGHT,
-        KEY_PRESS_SURFACE_TOTAL
-    };
-
     SDL_Window* gameWindow = nullptr;
-    SDL_Surface* gameScreenSurface = nullptr;
-    SDL_Surface* gameKeyPressSurface[KEY_PRESS_SURFACE_TOTAL];
-    SDL_Surface * gameCurrentSurface = nullptr;
     SDL_Renderer* gameRenderer = nullptr;
-    SDL_Texture* playerTexture = nullptr;
-    SDL_Texture* backgroundTexture = nullptr;
-
-    static const int WALKING_ANIMATION_SPEED = 4;
-    SDL_Rect gameSpriteClips [WALKING_ANIMATION_SPEED];
-    SDL_Texture* playerSpriteSheet;
-
-
-
 
 public:
     Display(int width, int height);
@@ -47,33 +24,21 @@ public:
 //Starts up SDL and creates window
     bool init();
 
-//Loads media
-    bool loadMedia(const char* imgFP);
-
-//Shows media on screen
-    void showMedia();
-
 //Frees media and shuts down SDL
     void closeDisplay();
+    void freeTexture(SDL_Texture* texture);
 
 //Loads individual image
     SDL_Surface* loadSurface(std::string path);
-
-//Update current surface based on keypress event
-    void updateSurface(SDL_Event e);
-
     SDL_Texture* loadTexture(std::string path);
-    void renderTexture(int x, int y, SDL_Texture* texture);
-    void renderBackground();
-    void renderPlayer(int x, int y, int rescaleFactor);
-    void freeTexture(SDL_Texture* texture);
 
+//Getter
     SDL_Renderer* getRenderer();
 
-    void playWalkAnimation(int frame);
-
+//read individual graph frame from frame index
     void renderGraphs(int frame);
 
+//Read in png files and convert them to bmp
     void PngToBmp(std::string pngFile, std::string bmpFile);
     void convertFrames(int frames);
 

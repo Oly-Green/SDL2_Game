@@ -15,9 +15,7 @@ void Graph::generateFrames(double factor) {
         for (int j = 0; j < y.size(); ++j) {
             double divY = (y[j]/factor)*(i+1);
             frames[i].push_back(divY);
-//            std::cout << divY << ", ";
         }
-//        std::cout << std::endl;
     }
 
     yMax = max(y);

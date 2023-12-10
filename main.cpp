@@ -16,6 +16,7 @@ and may not be redistributed without written permission.*/
 
 int main( int argc, char* args[] ){
     int frames = 20;
+    int animationSpeed = 7;
     Graph graph({100, 200, 300});
     graph.generateFrames(frames);
     Display display(640, 480);
@@ -23,6 +24,6 @@ int main( int argc, char* args[] ){
     sleep(3);
     display.convertFrames(frames);
     Game game;
-    game.start(display, frames, 7);
+    game.start(display, frames, animationSpeed);
     return 0;
 }
