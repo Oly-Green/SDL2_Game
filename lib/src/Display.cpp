@@ -10,32 +10,11 @@ Display::Display(int width, int height)
     FreeImage_Initialise();
 }
 
-bool Display::init() {
-    bool success = true;
-
-    if (SDL_Init(SDL_INIT_VIDEO) < 0){
-        printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-        success = false;
-    }
-    else{
-        gameWindow = SDL_CreateWindow("SDL Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (gameWindow == nullptr){
-            printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
-            success = false;
-        }
-        else{
-            gameRenderer = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-            if (gameRenderer == nullptr){
-                printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
-                success = false;
-            }
-            else{
-                SDL_SetRenderDrawColor(gameRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-            }
-        }
-    }
-
-    return success;
+void Display::init() {
+    SDL_Init(SDL_INIT_VIDEO);
+    gameWindow = SDL_CreateWindow("SDL Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    gameRenderer = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+    SDL_SetRenderDrawColor(gameRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 }
 
 void Display::closeDisplay() {
@@ -48,28 +27,15 @@ void Display::closeDisplay() {
 }
 
 SDL_Surface *Display::loadSurface(std::string path) {
-
     SDL_Surface* loadedSurface = SDL_LoadBMP(path.c_str());
-    if (loadedSurface == nullptr){
-        printf( "Unable to load image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
-    }
     return loadedSurface;
 }
 
 SDL_Texture *Display::loadTexture(std::string path) {
     SDL_Texture* newTexture = nullptr;
     SDL_Surface* loadedSurface = loadSurface(path.c_str());
-    if (loadedSurface == nullptr){
-        printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), SDL_GetError() );
-    }
-    else{
-        newTexture = SDL_CreateTextureFromSurface(gameRenderer, loadedSurface);
-        if (newTexture == nullptr){
-            printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
-        }
-        SDL_FreeSurface(loadedSurface);
-    }
-
+    newTexture = SDL_CreateTextureFromSurface(gameRenderer, loadedSurface);
+    SDL_FreeSurface(loadedSurface);
     return newTexture;
 }
 

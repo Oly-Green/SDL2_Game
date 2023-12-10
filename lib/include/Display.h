@@ -22,7 +22,7 @@ public:
     Display(int width, int height);
 
 //Starts up SDL and creates window
-    bool init();
+    void init();
 
 //Frees media and shuts down SDL
     void closeDisplay();
